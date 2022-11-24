@@ -12,7 +12,7 @@ import "./App.css";
 function App() {
   return (
     <BrowserRouter>
-      <div className="w-screen">
+      <div className="w-screen flex flex-col">
         <TopBar />
         <Body />
       </div>
