@@ -33,9 +33,15 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import SafetyCheckIcon from "@mui/icons-material/SafetyCheck";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import WindowIcon from "@mui/icons-material/Window";
-import { CheckBox, ExpandMore } from "@mui/icons-material";
+import { CheckBox, Close, ExpandMore } from "@mui/icons-material";
+
+import './index.scss';
+
 export default function Body() {
   const [filterVisible, setFilterVisible] = useState(false);
+  const [values, setValues] = useState({});
+  const [viewSystem, setViewSystem] = useState('grid');
+  const handleChange = () => { }
   return (
     <>
       <div className="bg-white-100 w-full flex box-border">
@@ -105,75 +111,6 @@ export default function Body() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col justify-center">
-            <span className="text-xl text-black font-bold">0.85 ETH</span>
-            <span className="text-zinc-400">floor price </span>
-          </div>
-          <div className="flex flex-col justify-center">
-            <span className="text-xl text-black font-bold">0.778 ETH</span>
-            <span className="text-zinc-400">best offer</span>
-          </div>
-          <div className="flex flex-col justify-center">
-            <span className="text-xl text-black font-bold">6%</span>
-            <span className="text-zinc-400">listed</span>
-          </div>
-          <div className="flex flex-col justify-center">
-            <span className="text-xl text-black font-bold">1993</span>
-            <span className="text-zinc-400">owners</span>
-          </div>
-          <div className="flex flex-col justify-center">
-            <span className="text-xl text-black font-bold">48%</span>
-            <span className="text-zinc-400">unique owners</span>
-          </div>
-        </div>
-      </div>
-      <div className="toolbar flex h-12 space-x-4 my-3 w-full">
-        <div className="flex items-center">
-          <IconButton aria-label="filter">
-            <FilterListIcon />
-          </IconButton>
-        </div>
-        <div className="w-full">
-          <FormControl className="h-full w-full">
-            <OutlinedInput
-              className="h-full"
-              id="outlined-adornment-amount"
-              value={values.amount}
-              onChange={handleChange("amount")}
-              startAdornment={
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              }
-            />
-          </FormControl>
-        </div>
-        <div className="w-60 flex items-center">
-          <ButtonGroup
-            className="w-full h-full"
-            variant="outlined"
-            aria-label="outlined button group"
-          >
-            <Button>
-              <ViewListIcon />
-            </Button>
-            <Button>
-              <GridOnIcon />
-            </Button>
-            <Button>
-              <GridViewIcon />
-            </Button>
-            <Button>
-              <CalendarViewMonthIcon />
-            </Button>
-          </ButtonGroup>
-        </div>
-        <div className="w-60 flex items-center">
-          <button className="inline-flex flex-row items-center rounded-xl justify-center leading-5 py-3 px-6 bg-white border-gray-200 border-2">
-            <span className="font-semibold text-base whitespace-nowrap text-sky-500">
-              Make collection offer
-            </span>
-          </button>
         </div>
       </div>
       <div>
@@ -296,8 +233,8 @@ export default function Body() {
           <Tab label="Items" />
         </Tabs>
         <div role="tabpanel">
-          <div className="flex z-40 h-16 t-20 lg:sticky text-gray-900">
-            <div className="w-[calc(100vw-17px)] t-0 h-full shadow-none lg:absolute lg:bg-gray-0 lg:left-[calc((100vw-(100%+17px))/-2)] lg:right-calc((100vw-(100%+17px))/-2)">
+          <div className="flex z-40 h-16 top-0 lg:sticky text-gray-900 bg-white">
+            <div className="w-[calc(100vw-17px)] top-0 h-full shadow-none lg:absolute lg:bg-gray-0 lg:left-[calc((100vw-(100%+17px))/-2)] lg:right-calc((100vw-(100%+17px))/-2)">
               <div className="h-full">
                 <div className="flex items-center h-full max-w-[2560px] w-full px-4 py-0 xl:px-8 2xl:px-16">
                   <button
@@ -306,12 +243,16 @@ export default function Body() {
                     <FilterListIcon />
                   </button>
                   <div className="mx-3 w-full">
-                    <FormControl className="w-full">
+                    <FormControl className="h-full w-full">
                       <OutlinedInput
                         className="h-full"
                         id="outlined-adornment-amount"
+                        value={values.amount}
+                        onChange={handleChange("amount")}
                         startAdornment={
-                          <InputAdornment position="start">$</InputAdornment>
+                          <InputAdornment position="start">
+                            <SearchIcon />
+                          </InputAdornment>
                         }
                       />
                     </FormControl>
@@ -325,10 +266,10 @@ export default function Body() {
                       <FormatListBulletedIcon />
                     </Button>
                     <Button>
-                      <GridOnIcon />
+                      <GridOnIcon onClick={() => setViewSystem('grid')} />
                     </Button>
                     <Button>
-                      <GridViewIcon />
+                      <GridViewIcon onClick={() => setViewSystem('item')} />
                     </Button>
                     <Button>
                       <WindowIcon />
@@ -341,9 +282,8 @@ export default function Body() {
           <div className="md:mt-0 w-full md:flex">
             <div className="max-md:hidden">
               <div
-                className={`flex flex-col sticky top-[138px] h-[calc(100vh-138px)] overflow-hidden ${
-                  filterVisible ? "w-[340px] -ml-2.5 mr-4" : "w-0"
-                }`}
+                className={`flex flex-col sticky top-[60px] h-[calc(100vh-60px)] overflow-hidden ${filterVisible ? "w-[340px] -ml-2.5 mr-4" : "w-0"
+                  }`}
               >
                 <div className="mr-4 mt-2">
                   <Accordion className="!shadow-none">
@@ -413,41 +353,62 @@ export default function Body() {
                 </div>
               </div>
             </div>
+            <div className='pb-[80px]  min-w-0 md:py-[28px] md:px-0 border-0 px-0 md:flex-1'>
+              <div className='mb-[16px] pt-[8px]'>
+                <ul className='gap-2 m-0 flex flex-wrap pl-0 list-none'>
+                  <li className='flex'>
+                    <div className='px-[20px] py-[12px] items-center flex rounded-lg bg-slate-100 text-slate-900'>
+                      <div className='font-semibold'>On Auction</div>
+                      <Close />
+                    </div>
+                  </li>
+                  <li className='flex ml-[28px] text-slate-900'>
+                    <div className='font-semibold'>
+                      <button className='px-[20px] py-[12px]'>Clear all</button>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              {/* <div className="grid gap-2 sm:max-md:grid-cols-2 md:max-lg:grid-cols-3 lg:max-xl:grid-cols-4 xl:max-2xl:grid-cols-5 2xl:grid-cols-6"> */}
+              <div id="item-container" className={`${filterVisible ? 'template-reduced-column' : 'no-template-reduced-column'} ${viewSystem === 'item' ? 'template-reduced-columns-multiplier template-columns' : 'template-reduced-columns-multiplier-double template-columns-double'}`}>
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map(
+                  (item) => (
+                    <div>
+                      <Card sx={{ maxWidth: 345 }}>
+                        <div className='overflow-hidden'>
+                          <CardMedia
+                            component="img"
+                            className="hover:scale-125 hover:transition-all hover:ease-in hover:duraton-1000"
+                            height="140"
+                            image="img/card.png"
+                            alt="green iguana"
+                          />
+                        </div>
+                        <CardContent>
+                          <Typography gutterBottom variant="h7" component="div">
+                            Cel Mates Crime Report
+                          </Typography>
+                          <Typography variant="h7" color="text.secondary">
+                            0.929 ETH
+                          </Typography>
+                          <Typography variant="h7" color="text.secondary">
+                            Last Sale
+                          </Typography>
+                        </CardContent>
+                        <CardActions>
+                          <Button size="small">Share</Button>
+                          <Button size="small">Learn More</Button>
+                        </CardActions>
+                      </Card>
+                    </div>
+                  )
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
       {/* grid gap-2 sm:grid-cols-6 lg:grid-cols-3 md:grid-cols-5 2xl:grid-cols-5 xl:grid-cols-4 */}
-      <div className="grid gap-2 sm:max-md:grid-cols-2 md:max-lg:grid-cols-3 lg:max-xl:grid-cols-4 xl:max-2xl:grid-cols-5 2xl:grid-cols-6">
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map(
-          (item) => (
-            <div>
-              <Card sx={{ maxWidth: 345 }}>
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image="img/card.png"
-                  alt="green iguana"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h7" component="div">
-                    Cel Mates Crime Report
-                  </Typography>
-                  <Typography variant="h7" color="text.secondary">
-                    0.929 ETH
-                  </Typography>
-                  <Typography variant="h7" color="text.secondary">
-                    Last Sale
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size="small">Share</Button>
-                  <Button size="small">Learn More</Button>
-                </CardActions>
-              </Card>
-            </div>
-          )
-        )}
-      </div>
     </>
   );
 }
